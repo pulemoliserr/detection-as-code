@@ -1,0 +1,12 @@
+rule: Linux SSH Failed Authentication
+match:
+- src_ip: 198.51.100.23
+  message: Failed password for root from 198.51.100.23 port 52144 ssh2
+  timestamp: '2026-11-10T21:03:00'
+- src_ip: 198.51.100.23
+  message: Invalid user oracle from 198.51.100.23 port 52150
+  timestamp: '2026-11-10T21:03:01'
+nomatch:
+- src_ip: 10.0.0.5
+  message: Accepted publickey for deploy from 10.0.0.5 port 50022 ssh2
+  timestamp: '2026-11-10T21:03:00'

@@ -1,0 +1,46 @@
+title: Windows Failed Logon
+id: c6c5714e-2667-4b71-b57a-2e1b70d39b80
+name: windows_failed_logon
+status: experimental
+description: A failed Windows logon (event 4625). Low value alone; used by the brute-force correlation below.
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.credential-access
+  - attack.t1110
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+  condition: selection
+falsepositives:
+  - Users mistyping passwords
+level: low
+---
+title: Windows Logon Brute Force from a Single Source
+id: 56306da6-6818-42dd-b1a0-00b0a3115eba
+status: experimental
+description: |
+  Ten or more failed logons from the same source IP within 5 minutes, which
+  suggests password guessing or spraying.
+references:
+  - https://attack.mitre.org/techniques/T1110/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.credential-access
+  - attack.t1110
+correlation:
+  type: event_count
+  rules:
+    - windows_failed_logon
+  group-by:
+    - IpAddress
+  timespan: 5m
+  condition:
+    gte: 10
+falsepositives:
+  - A misconfigured service retrying with an old password
+level: high

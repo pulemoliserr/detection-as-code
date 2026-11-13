@@ -1,0 +1,15 @@
+rule: Linux Permissions Made World-Writable
+match:
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod 777 /etc/cron.d/backup'
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod o+w project_k.txt'
+nomatch:
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod o-w project_k.txt'
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod 640 /var/log/app.log'
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod u+w,g-w notes.txt'
+  - Image: '/usr/bin/chmod'
+    CommandLine: 'chmod 750 /opt/app/bin'

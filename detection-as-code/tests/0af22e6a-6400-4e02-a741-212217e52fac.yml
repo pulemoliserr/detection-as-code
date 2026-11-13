@@ -1,0 +1,11 @@
+rule: LSASS Memory Dump via ProcDump or Comsvcs
+match:
+  - Image: 'C:\Tools\procdump64.exe'
+    CommandLine: 'procdump64.exe -accepteula -ma lsass.exe C:\Temp\l.dmp'
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32.exe C:\Windows\System32\comsvcs.dll, MiniDump 624 C:\Temp\out.dmp full'
+nomatch:
+  - Image: 'C:\Windows\System32\tasklist.exe'
+    CommandLine: 'tasklist /fi "imagename eq lsass.exe"'
+  - Image: 'C:\Tools\procdump64.exe'
+    CommandLine: 'procdump64.exe -ma w3wp.exe C:\Dumps\w3wp.dmp'

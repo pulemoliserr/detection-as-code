@@ -1,0 +1,19 @@
+rule: Web Path Traversal Attempt
+match:
+  - cs-method: GET
+    cs-uri-stem: '/download'
+    cs-uri-query: 'file=../../../../etc/passwd'
+    c-ip: '203.0.113.44'
+  - cs-method: GET
+    cs-uri-stem: '/static/%2e%2e%2f%2e%2e%2fwindows/win.ini'
+    cs-uri-query: ''
+    c-ip: '203.0.113.44'
+nomatch:
+  - cs-method: GET
+    cs-uri-stem: '/images/logo.png'
+    cs-uri-query: ''
+    c-ip: '10.0.0.5'
+  - cs-method: GET
+    cs-uri-stem: '/docs/getting-started'
+    cs-uri-query: 'page=2&sort=asc'
+    c-ip: '10.0.0.5'

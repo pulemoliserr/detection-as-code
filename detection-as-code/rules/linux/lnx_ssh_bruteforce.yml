@@ -1,0 +1,48 @@
+title: Linux SSH Failed Authentication
+id: 04544a86-a008-41f1-b42f-62e8ec5f598c
+name: linux_ssh_failed_auth
+status: experimental
+description: Failed SSH password or invalid-user attempt in the auth log. Used by the brute-force correlation below.
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+logsource:
+  product: linux
+  service: auth
+detection:
+  selection:
+    message|contains:
+      - 'Failed password'
+      - 'Invalid user'
+  condition: selection
+falsepositives:
+  - Users mistyping passwords
+level: low
+---
+title: Linux SSH Brute Force from a Single Source
+id: e0465940-cecd-4d5a-adfc-f27c26b54b53
+status: experimental
+description: |
+  Ten or more failed SSH authentications from one source IP within 5 minutes.
+  The same pattern as the website brute-force incident in project 05.
+references:
+  - https://attack.mitre.org/techniques/T1110/001/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+correlation:
+  type: event_count
+  rules:
+    - linux_ssh_failed_auth
+  group-by:
+    - src_ip
+  timespan: 5m
+  condition:
+    gte: 10
+falsepositives:
+  - Monitoring or automation using stale credentials
+level: high

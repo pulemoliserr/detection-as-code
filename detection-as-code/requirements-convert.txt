@@ -1,0 +1,8 @@
+# SIEM converters used by scripts/build_docs.py.
+# Their published metadata still pins pySigma<2, but they work with pySigma 2.1,
+# so install them WITHOUT dependencies after requirements.txt:
+#   pip install --no-deps -r requirements-convert.txt
+pySigma-backend-splunk==2.1.0
+pySigma-backend-elasticsearch==2.1.1
+pySigma-pipeline-sysmon==2.0.0
+pySigma-pipeline-windows==2.0.1

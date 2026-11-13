@@ -1,0 +1,115 @@
+rule: Linux SSH Brute Force from a Single Source
+description: 'match: 15 failures from one IP in 30 seconds. nomatch: 9 failures in a burst (below threshold) and 12 slow failures, 10 minutes apart.'
+match:
+- src_ip: 198.51.100.23
+  message: Failed password for root from 198.51.100.23 port 52000 ssh2
+  timestamp: '2026-11-10T21:03:00'
+- src_ip: 198.51.100.23
+  message: Failed password for admin from 198.51.100.23 port 52001 ssh2
+  timestamp: '2026-11-10T21:03:02'
+- src_ip: 198.51.100.23
+  message: Failed password for ubuntu from 198.51.100.23 port 52002 ssh2
+  timestamp: '2026-11-10T21:03:04'
+- src_ip: 198.51.100.23
+  message: Failed password for pi from 198.51.100.23 port 52003 ssh2
+  timestamp: '2026-11-10T21:03:06'
+- src_ip: 198.51.100.23
+  message: Failed password for oracle from 198.51.100.23 port 52004 ssh2
+  timestamp: '2026-11-10T21:03:08'
+- src_ip: 198.51.100.23
+  message: Failed password for root from 198.51.100.23 port 52005 ssh2
+  timestamp: '2026-11-10T21:03:10'
+- src_ip: 198.51.100.23
+  message: Failed password for admin from 198.51.100.23 port 52006 ssh2
+  timestamp: '2026-11-10T21:03:12'
+- src_ip: 198.51.100.23
+  message: Failed password for ubuntu from 198.51.100.23 port 52007 ssh2
+  timestamp: '2026-11-10T21:03:14'
+- src_ip: 198.51.100.23
+  message: Failed password for pi from 198.51.100.23 port 52008 ssh2
+  timestamp: '2026-11-10T21:03:16'
+- src_ip: 198.51.100.23
+  message: Failed password for oracle from 198.51.100.23 port 52009 ssh2
+  timestamp: '2026-11-10T21:03:18'
+- src_ip: 198.51.100.23
+  message: Failed password for root from 198.51.100.23 port 52010 ssh2
+  timestamp: '2026-11-10T21:03:20'
+- src_ip: 198.51.100.23
+  message: Failed password for admin from 198.51.100.23 port 52011 ssh2
+  timestamp: '2026-11-10T21:03:22'
+- src_ip: 198.51.100.23
+  message: Failed password for ubuntu from 198.51.100.23 port 52012 ssh2
+  timestamp: '2026-11-10T21:03:24'
+- src_ip: 198.51.100.23
+  message: Failed password for pi from 198.51.100.23 port 52013 ssh2
+  timestamp: '2026-11-10T21:03:26'
+- src_ip: 198.51.100.23
+  message: Failed password for oracle from 198.51.100.23 port 52014 ssh2
+  timestamp: '2026-11-10T21:03:28'
+nomatch:
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53000 ssh2
+  timestamp: '2026-11-10T21:03:00'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53001 ssh2
+  timestamp: '2026-11-10T21:03:01'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53002 ssh2
+  timestamp: '2026-11-10T21:03:02'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53003 ssh2
+  timestamp: '2026-11-10T21:03:03'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53004 ssh2
+  timestamp: '2026-11-10T21:03:04'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53005 ssh2
+  timestamp: '2026-11-10T21:03:05'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53006 ssh2
+  timestamp: '2026-11-10T21:03:06'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53007 ssh2
+  timestamp: '2026-11-10T21:03:07'
+- src_ip: 198.51.100.99
+  message: Failed password for root from 198.51.100.99 port 53008 ssh2
+  timestamp: '2026-11-10T21:03:08'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54000 ssh2
+  timestamp: '2026-11-10T21:03:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54001 ssh2
+  timestamp: '2026-11-10T21:13:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54002 ssh2
+  timestamp: '2026-11-10T21:23:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54003 ssh2
+  timestamp: '2026-11-10T21:33:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54004 ssh2
+  timestamp: '2026-11-10T21:43:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54005 ssh2
+  timestamp: '2026-11-10T21:53:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54006 ssh2
+  timestamp: '2026-11-10T22:03:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54007 ssh2
+  timestamp: '2026-11-10T22:13:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54008 ssh2
+  timestamp: '2026-11-10T22:23:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54009 ssh2
+  timestamp: '2026-11-10T22:33:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54010 ssh2
+  timestamp: '2026-11-10T22:43:00'
+- src_ip: 10.0.0.8
+  message: Failed password for deploy from 10.0.0.8 port 54011 ssh2
+  timestamp: '2026-11-10T22:53:00'
+- src_ip: 10.0.0.5
+  message: Accepted publickey for deploy from 10.0.0.5 port 50022 ssh2
+  timestamp: '2026-11-10T21:03:05'

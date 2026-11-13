@@ -1,0 +1,32 @@
+title: Web SQL Injection Attempt
+id: 902d1ee3-97fb-417f-9933-9e6c2ce3f1ad
+status: experimental
+description: |
+  Detects common SQL injection payloads in web request URIs. Builds on the SQL
+  filtering skills in project 08, from the attacker's side.
+references:
+  - https://attack.mitre.org/techniques/T1190/
+  - https://cwe.mitre.org/data/definitions/89.html
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.initial-access
+  - attack.t1190
+logsource:
+  category: webserver
+detection:
+  selection:
+    cs-uri-query|contains:
+      - 'union select'
+      - 'union+select'
+      - 'union%20select'
+      - "' or '1'='1"
+      - '%27%20or%20%271%27%3d%271'
+      - ' or 1=1'
+      - '+or+1=1'
+      - 'information_schema'
+      - 'sleep('
+  condition: selection
+falsepositives:
+  - Vulnerability scanners run by your own team
+level: high

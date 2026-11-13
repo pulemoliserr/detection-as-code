@@ -1,0 +1,97 @@
+{
+  "name": "Detection-as-code coverage",
+  "versions": {
+    "attack": "16",
+    "navigator": "5.1.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Techniques covered by the Sigma rules in this repository. Score = highest rule level (1 low - 4 critical).",
+  "techniques": [
+    {
+      "techniqueID": "T1003.001",
+      "score": 4,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1027",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "score": 2,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1070.001",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1098",
+      "score": 2,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 2,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1110",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1110.001",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1136.001",
+      "score": 2,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1190",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 3,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1222.002",
+      "score": 2,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1490",
+      "score": 4,
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 3,
+      "enabled": true
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#cde2fb",
+      "#256abf"
+    ],
+    "minValue": 0,
+    "maxValue": 4
+  },
+  "legendItems": [],
+  "showTacticRowBackground": true
+}

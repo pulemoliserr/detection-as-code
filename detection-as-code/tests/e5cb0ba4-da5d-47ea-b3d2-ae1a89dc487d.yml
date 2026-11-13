@@ -1,0 +1,11 @@
+rule: Scheduled Task Created from a Suspicious Location
+match:
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks /create /tn "Updater" /tr "C:\Users\bob\AppData\Roaming\upd.exe" /sc onlogon'
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks /create /tn "Sync" /tr "powershell -w hidden -c iex(...)" /sc minute /mo 15'
+nomatch:
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks /create /tn "Backup" /tr "C:\Program Files\Backup\backup.exe" /sc daily'
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks /query /tn "Updater"'

@@ -1,0 +1,25 @@
+title: Linux Local User Account Created
+id: a08534fc-c4c4-4725-ba6a-b874c458fbce
+status: experimental
+description: |
+  Detects useradd or adduser being run. New local accounts on servers should be
+  rare and match a change request; attackers create them to keep access.
+references:
+  - https://attack.mitre.org/techniques/T1136/001/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.persistence
+  - attack.t1136.001
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '/useradd'
+      - '/adduser'
+  condition: selection
+falsepositives:
+  - Provisioning by configuration management (Ansible, Puppet)
+level: medium

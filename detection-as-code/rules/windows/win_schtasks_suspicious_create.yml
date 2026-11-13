@@ -1,0 +1,33 @@
+title: Scheduled Task Created from a Suspicious Location
+id: e5cb0ba4-da5d-47ea-b3d2-ae1a89dc487d
+status: experimental
+description: |
+  Detects schtasks.exe creating a task that runs from user-writable folders or
+  launches a shell. Attackers use scheduled tasks to keep access after a reboot.
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053.005
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith: '\schtasks.exe'
+    CommandLine|contains: '/create'
+  selection_payload:
+    CommandLine|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - 'powershell'
+      - 'cmd /c'
+      - 'mshta'
+  condition: all of selection_*
+falsepositives:
+  - Software updaters that install tasks running from AppData
+level: medium

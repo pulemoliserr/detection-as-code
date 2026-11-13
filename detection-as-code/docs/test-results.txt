@@ -1,0 +1,20 @@
+Rule                                                Type         TP hits  FP hits  Result
+------------------------------------------------------------------------------------------
+Linux Local User Account Created                    detection          2        0  PASS
+Linux SSH Failed Authentication                     detection          2        0  PASS
+Linux SSH Brute Force from a Single Source          correlation        6        0  PASS
+Linux Permissions Made World-Writable               detection          2        0  PASS
+Web Path Traversal Attempt                          detection          2        0  PASS
+Web SQL Injection Attempt                           detection          2        0  PASS
+Windows Failed Logon                                detection          1        0  PASS
+Windows Logon Brute Force from a Single Source      correlation        3        0  PASS
+LSASS Memory Dump via ProcDump or Comsvcs           detection          2        0  PASS
+Office Application Spawning a Shell or Script Host  detection          2        0  PASS
+PowerShell Download Cradle                          detection          2        0  PASS
+PowerShell Encoded Command Execution                detection          2        0  PASS
+Scheduled Task Created from a Suspicious Location   detection          2        0  PASS
+Windows Security Event Log Cleared                  detection          1        0  PASS
+Shadow Copy or Backup Catalog Deletion              detection          3        0  PASS
+User Added to Local Administrators Group            detection          1        0  PASS
+
+16/16 rules passed

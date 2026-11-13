@@ -1,0 +1,11 @@
+rule: Linux Local User Account Created
+match:
+  - Image: '/usr/sbin/useradd'
+    CommandLine: 'useradd -m -s /bin/bash -G sudo support2'
+  - Image: '/usr/sbin/adduser'
+    CommandLine: 'adduser backdoor'
+nomatch:
+  - Image: '/usr/bin/id'
+    CommandLine: 'id support2'
+  - Image: '/usr/sbin/usermod'
+    CommandLine: 'usermod -L olduser'

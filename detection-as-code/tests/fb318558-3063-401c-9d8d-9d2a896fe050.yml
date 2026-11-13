@@ -1,0 +1,14 @@
+rule: User Added to Local Administrators Group
+match:
+  - EventID: 4732
+    TargetUserName: 'Administrators'
+    TargetSid: 'S-1-5-32-544'
+    MemberName: 'CN=helpdesk2'
+nomatch:
+  - EventID: 4732
+    TargetUserName: 'Remote Desktop Users'
+    TargetSid: 'S-1-5-32-555'
+    MemberName: 'CN=anna'
+  - EventID: 4624
+    TargetUserName: 'Administrators'
+    TargetSid: 'S-1-5-32-544'

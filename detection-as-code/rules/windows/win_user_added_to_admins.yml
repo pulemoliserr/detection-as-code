@@ -1,0 +1,25 @@
+title: User Added to Local Administrators Group
+id: fb318558-3063-401c-9d8d-9d2a896fe050
+status: experimental
+description: |
+  Detects a member being added to the built-in local Administrators group (event
+  4732 for group SID S-1-5-32-544). This is a common way to keep or escalate access.
+references:
+  - https://attack.mitre.org/techniques/T1098/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.t1098
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4732
+    TargetSid: 'S-1-5-32-544'
+  condition: selection
+falsepositives:
+  - Approved changes by IT; compare against change tickets
+level: medium

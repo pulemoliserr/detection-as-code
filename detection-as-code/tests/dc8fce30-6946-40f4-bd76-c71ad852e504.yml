@@ -1,0 +1,15 @@
+rule: PowerShell Encoded Command Execution
+match:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    ParentImage: 'C:\Windows\System32\cmd.exe'
+    CommandLine: 'powershell.exe -NoP -W Hidden -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQA'
+  - Image: 'C:\Program Files\PowerShell\7\pwsh.exe'
+    ParentImage: 'C:\Windows\explorer.exe'
+    CommandLine: 'pwsh.exe /EncodedCommand JABjAGwAaQBlAG4AdAA='
+nomatch:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    ParentImage: 'C:\Windows\System32\svchost.exe'
+    CommandLine: 'powershell.exe -ExecutionPolicy Bypass -File C:\Scripts\backup.ps1'
+  - Image: 'C:\Windows\System32\certutil.exe'
+    ParentImage: 'C:\Windows\System32\cmd.exe'
+    CommandLine: 'certutil.exe -encode input.txt output.b64'

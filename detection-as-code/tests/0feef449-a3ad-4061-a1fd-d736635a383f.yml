@@ -1,0 +1,13 @@
+rule: Shadow Copy or Backup Catalog Deletion
+match:
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin.exe Delete Shadows /All /Quiet'
+  - Image: 'C:\Windows\System32\wbem\WMIC.exe'
+    CommandLine: 'wmic shadowcopy delete'
+  - Image: 'C:\Windows\System32\bcdedit.exe'
+    CommandLine: 'bcdedit /set {default} recoveryenabled No'
+nomatch:
+  - Image: 'C:\Windows\System32\vssadmin.exe'
+    CommandLine: 'vssadmin list shadows'
+  - Image: 'C:\Windows\System32\wbadmin.exe'
+    CommandLine: 'wbadmin get versions'

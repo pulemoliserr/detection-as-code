@@ -1,0 +1,30 @@
+title: Linux Permissions Made World-Writable
+id: 8ce54175-1a13-42b2-8024-5893a8b382b3
+status: experimental
+description: |
+  Detects chmod granting write access to "other" (777, o+w, a+w). This breaks least
+  privilege and lets any user tamper with files; see project 07 (Linux permissions).
+references:
+  - https://attack.mitre.org/techniques/T1222/002/
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.defense-evasion
+  - attack.t1222.002
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith: '/chmod'
+  selection_mode:
+    CommandLine|contains:
+      - ' 777'
+      - ' 0777'
+      - ' 666'
+      - ' o+w'
+      - ' a+w'
+  condition: all of selection_*
+falsepositives:
+  - Temporary troubleshooting by administrators (should be reverted)
+level: medium

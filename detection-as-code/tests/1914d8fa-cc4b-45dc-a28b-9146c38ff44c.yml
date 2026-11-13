@@ -1,0 +1,7 @@
+rule: Windows Security Event Log Cleared
+match:
+  - EventID: 1102
+    SubjectUserName: 'attacker'
+nomatch:
+  - EventID: 4624
+    SubjectUserName: 'anna'

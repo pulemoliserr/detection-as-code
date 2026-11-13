@@ -1,0 +1,133 @@
+"""Generate documentation from the rules:
+
+  docs/coverage.md                 rule list + MITRE ATT&CK coverage table
+  docs/queries.md                  each rule converted to Splunk SPL and Elastic (Lucene)
+  docs/attack-navigator-layer.json load into https://mitre-attack.github.io/attack-navigator/
+
+Usage:  python scripts/build_docs.py
+Needs the converter packages (see requirements-convert.txt) for docs/queries.md;
+without them, only the coverage files are built.
+"""
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from run_tests import ROOT, load_rules  # noqa: E402
+from sigma.correlations import SigmaCorrelationRule  # noqa: E402
+
+DOCS = ROOT / "docs"
+TACTIC_ORDER = ["initial-access", "execution", "persistence", "privilege-escalation",
+                "defense-evasion", "credential-access", "command-and-control", "impact"]
+LEVEL_SCORE = {"low": 1, "medium": 2, "high": 3, "critical": 4}
+
+
+def attack_info(rule):
+    techniques = [t.name.upper() for t in rule.tags if t.namespace == "attack" and t.name.startswith("t")]
+    tactics = [t.name for t in rule.tags if t.namespace == "attack" and not t.name.startswith("t")]
+    return techniques, tactics
+
+
+def rule_file(rule):
+    for f in sorted((ROOT / "rules").rglob("*.yml")):
+        if str(rule.id) in f.read_text():
+            return f.relative_to(ROOT).as_posix()
+    return ""
+
+
+def build_coverage(rules):
+    lines = ["# Rule & ATT&CK coverage", "",
+             "| Rule | Type | Level | Log source | ATT&CK techniques | File |",
+             "|---|---|---|---|---|---|"]
+    by_tactic = defaultdict(set)
+    layer_scores = {}
+    for r in rules:
+        techs, tactics = attack_info(r)
+        kind = "Correlation" if isinstance(r, SigmaCorrelationRule) else "Detection"
+        if isinstance(r, SigmaCorrelationRule):
+            src = "(correlates " + ", ".join(ref.reference for ref in r.rules) + ")"
+        else:
+            ls = r.logsource
+            src = " / ".join(x for x in (ls.product, ls.category, ls.service) if x)
+        f = rule_file(r)
+        lines.append(f"| {r.title} | {kind} | {r.level.name.lower()} | {src} | "
+                     f"{', '.join(techs)} | [{Path(f).name}](../{f}) |")
+        for tac in tactics:
+            by_tactic[tac].update(techs)
+        for t in techs:
+            layer_scores[t] = max(layer_scores.get(t, 0), LEVEL_SCORE[r.level.name.lower()])
+
+    lines += ["", "## Coverage by tactic", "", "| Tactic | Techniques covered |", "|---|---|"]
+    for tac in TACTIC_ORDER:
+        if by_tactic.get(tac):
+            lines.append(f"| {tac.replace('-', ' ').title()} | {', '.join(sorted(by_tactic[tac]))} |")
+    lines += ["", f"**{len(rules)} rules · {len(layer_scores)} ATT&CK techniques**", ""]
+    (DOCS / "coverage.md").write_text("\n".join(lines))
+
+    layer = {
+        "name": "Detection-as-code coverage",
+        "versions": {"attack": "16", "navigator": "5.1.0", "layer": "4.5"},
+        "domain": "enterprise-attack",
+        "description": "Techniques covered by the Sigma rules in this repository. Score = highest rule level (1 low - 4 critical).",
+        "techniques": [{"techniqueID": t, "score": s, "enabled": True} for t, s in sorted(layer_scores.items())],
+        "gradient": {"colors": ["#cde2fb", "#256abf"], "minValue": 0, "maxValue": 4},
+        "legendItems": [], "showTacticRowBackground": True,
+    }
+    (DOCS / "attack-navigator-layer.json").write_text(json.dumps(layer, indent=2))
+
+
+def build_queries(rules):
+    try:
+        from sigma.backends.elasticsearch import LuceneBackend
+        from sigma.backends.splunk import SplunkBackend
+        from sigma.pipelines.sysmon import sysmon_pipeline
+        from sigma.pipelines.windows import windows_logsource_pipeline
+    except ImportError:
+        print("Converter packages not installed - skipping docs/queries.md")
+        return
+    backends = {
+        "Splunk (SPL)": lambda: SplunkBackend(sysmon_pipeline() + windows_logsource_pipeline()),
+        "Elastic (Lucene)": lambda: LuceneBackend(sysmon_pipeline() + windows_logsource_pipeline()),
+    }
+    # pySigma caches each rule's converted query on the rule object (correlations reuse it),
+    # so every backend gets a freshly loaded rule set
+    results = {}
+    for name, make in backends.items():
+        backend = make()
+        for r in load_rules():
+            try:
+                if isinstance(r, SigmaCorrelationRule):
+                    q = backend.convert_correlation_rule(r)
+                else:
+                    r._output = True
+                    q = backend.convert_rule(r)
+                results[(r.title, name)] = "\n".join(str(x) for x in q)
+            except Exception as exc:  # backend doesn't support this rule type
+                results[(r.title, name)] = exc
+    out = ["# Rules converted to SIEM queries", "",
+           "Generated by `scripts/build_docs.py` with pySigma. Windows rules use the Sysmon and Windows "
+           "log-source pipelines; field names may need adjusting to your SIEM's data model.", ""]
+    for r in rules:
+        out += [f"## {r.title}", ""]
+        for name in backends:
+            res = results[(r.title, name)]
+            if isinstance(res, Exception):
+                out += [f"**{name}:** not supported by this backend ({type(res).__name__}). "
+                        "Use the base rule above it plus a threshold alert in the SIEM.", ""]
+            else:
+                lang = "spl" if "Splunk" in name else "text"
+                out += [f"**{name}**", "", f"```{lang}", res, "```", ""]
+    (DOCS / "queries.md").write_text("\n".join(out))
+
+
+def main():
+    DOCS.mkdir(exist_ok=True)
+    rules = list(load_rules())
+    build_coverage(rules)
+    build_queries(rules)
+    print("Docs written to", DOCS)
+
+
+if __name__ == "__main__":
+    main()
