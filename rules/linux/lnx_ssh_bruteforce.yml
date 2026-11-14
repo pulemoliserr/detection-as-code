@@ -3,7 +3,7 @@ id: 04544a86-a008-41f1-b42f-62e8ec5f598c
 name: linux_ssh_failed_auth
 status: experimental
 description: Failed SSH password or invalid-user attempt in the auth log. Used by the brute-force correlation below.
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.credential-access
@@ -29,7 +29,7 @@ description: |
   The same pattern as the website brute-force incident in project 05.
 references:
   - https://attack.mitre.org/techniques/T1110/001/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.credential-access

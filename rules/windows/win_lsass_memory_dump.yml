@@ -8,7 +8,7 @@ description: |
   MiniDump call through comsvcs.
 references:
   - https://attack.mitre.org/techniques/T1003/001/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.credential-access

@@ -6,7 +6,7 @@ description: |
   4732 for group SID S-1-5-32-544). This is a common way to keep or escalate access.
 references:
   - https://attack.mitre.org/techniques/T1098/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.persistence

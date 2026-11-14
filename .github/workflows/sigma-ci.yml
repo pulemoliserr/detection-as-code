@@ -1,0 +1,37 @@
+name: Sigma rules CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Lint and test every rule against its sample events
+        run: python scripts/run_tests.py
+
+  convert:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          pip install -r requirements.txt
+          pip install --no-deps -r requirements-convert.txt
+      - name: Convert rules to Splunk and Elastic, rebuild coverage
+        run: python scripts/build_docs.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: siem-queries
+          path: docs/

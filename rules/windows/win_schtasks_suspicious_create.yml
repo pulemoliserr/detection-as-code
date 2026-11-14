@@ -6,7 +6,7 @@ description: |
   launches a shell. Attackers use scheduled tasks to keep access after a reboot.
 references:
   - https://attack.mitre.org/techniques/T1053/005/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.persistence

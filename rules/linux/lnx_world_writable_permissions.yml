@@ -6,7 +6,7 @@ description: |
   privilege and lets any user tamper with files; see project 07 (Linux permissions).
 references:
   - https://attack.mitre.org/techniques/T1222/002/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.defense-evasion

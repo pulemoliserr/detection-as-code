@@ -1,5 +1,9 @@
 # Detection-as-Code: Tested Sigma Rules
 
+[![Sigma rules CI](https://github.com/pulemoliserr/detection-as-code/actions/workflows/sigma-ci.yml/badge.svg)](https://github.com/pulemoliserr/detection-as-code/actions/workflows/sigma-ci.yml)
+
+Part of my cybersecurity portfolio: [project write-up](https://pulemolise.net/cybersecurity/detection-as-code/) · [pulemolise.net](https://pulemolise.net)
+
 A small, tested library of **Sigma detection rules**, each mapped to **MITRE ATT&CK** and checked automatically against sample attack and benign log events. Rules are converted to **Splunk** and **Elastic** queries on every commit.
 
 Detection-as-code applies software practices to SOC detections: rules live in version control, every rule has tests, and a pipeline proves a change hasn't broken anything before it reaches the SIEM.
@@ -65,7 +69,7 @@ pip install --no-deps -r requirements-convert.txt # SIEM converters (see note in
 python scripts/build_docs.py                      # regenerate docs/
 ```
 
-**CI:** `.github/workflows/sigma-ci.yml` runs the tests on every push and pull request, then converts the rules and uploads the SIEM queries as a build artifact. For the workflow to run, publish this folder as **its own GitHub repository**, because workflows only run from a repository's root.
+**CI:** `.github/workflows/sigma-ci.yml` runs the tests on every push and pull request, then converts the rules and uploads the SIEM queries as a build artifact. 
 
 **ATT&CK Navigator:** open <https://mitre-attack.github.io/attack-navigator/>, choose *Open Existing Layer → Upload from local*, and select `docs/attack-navigator-layer.json` to see the coverage heatmap. A screenshot of it makes a good image for this README.
 
@@ -81,4 +85,3 @@ python scripts/build_docs.py                      # regenerate docs/
 - Field names follow Sigma's generic taxonomy. Real SIEMs may need a field-mapping pipeline.
 - Rule thresholds (such as 10 failures in 5 minutes) are starting points to tune against real traffic.
 
-*Before publishing, replace `YOUR NAME` in the `author:` field of each rule.*
