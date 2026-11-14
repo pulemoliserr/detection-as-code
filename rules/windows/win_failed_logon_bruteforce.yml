@@ -3,7 +3,7 @@ id: c6c5714e-2667-4b71-b57a-2e1b70d39b80
 name: windows_failed_logon
 status: experimental
 description: A failed Windows logon (event 4625). Low value alone; used by the brute-force correlation below.
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.credential-access
@@ -27,7 +27,7 @@ description: |
   suggests password guessing or spraying.
 references:
   - https://attack.mitre.org/techniques/T1110/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.credential-access

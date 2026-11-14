@@ -7,7 +7,7 @@ description: |
   can't restore them.
 references:
   - https://attack.mitre.org/techniques/T1490/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.impact

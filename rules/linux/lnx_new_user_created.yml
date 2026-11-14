@@ -6,7 +6,7 @@ description: |
   rare and match a change request; attackers create them to keep access.
 references:
   - https://attack.mitre.org/techniques/T1136/001/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.persistence

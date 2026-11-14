@@ -8,7 +8,7 @@ description: |
 references:
   - https://attack.mitre.org/techniques/T1190/
   - https://cwe.mitre.org/data/definitions/22.html
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.initial-access

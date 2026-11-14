@@ -6,7 +6,7 @@ description: |
   first stage for loading malware or attack tools (e.g. IEX + DownloadString).
 references:
   - https://attack.mitre.org/techniques/T1105/
-author: YOUR NAME
+author: Pule Molise
 date: 2026-11-13
 tags:
   - attack.execution
